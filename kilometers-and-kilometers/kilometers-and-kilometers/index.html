@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kilometers and Kilometers</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/auth.css">
+</head>
+<body>
+    <!-- Auth Screens -->
+    <div id="auth-screens">
+        <div class="auth-container" id="login-container">
+            <div class="auth-card">
+                <h2>Login to Your Account</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <p>Don't have an account? <a href="#" id="show-signup">Sign Up</a></p>
+            </div>
+        </div>
+
+        <div class="auth-container" id="signup-container" style="display: none;">
+            <div class="auth-card">
+                <h2>Create an Account</h2>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+                <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App (hidden initially) -->
+    <div id="app" style="display: none;">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-route"></i>
+                        <span>Kilometers & Kilometers</span>
+                    </div>
+                    <nav>
+                        <ul>
+                            <li><a href="#" class="nav-link" data-page="dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                            <li><a href="#" class="nav-link" data-page="quests"><i class="fas fa-map-marked-alt"></i> Quests</a></li>
+                            <li><a href="#" class="nav-link" data-page="leaderboard"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                            <li><a href="#" class="nav-link" data-page="friends"><i class="fas fa-users"></i> Friends</a></li>
+                            <li><a href="#" class="nav-link" data-page="profile"><i class="fas fa-user"></i> Profile</a></li>
+                        </ul>
+                    </nav>
+                    <div class="user-actions">
+                        <span id="user-points">0 <i class="fas fa-coins"></i></span>
+                        <button id="logout-btn" class="btn btn-outline">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="container">
+                <!-- Dashboard Page -->
+                <div id="dashboard-page" class="page active">
+                    <h2>Welcome, <span id="user-name">Traveler</span>!</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="visited-count">0</h3>
+                                <p>Destinations Visited</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-route"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="quests-completed">0</h3>
+                                <p>Quests Completed</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-ranking-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="user-rank">#0</h3>
+                                <p>Your Rank</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Active Quests</h3>
+                        <div id="active-quests" class="quests-grid">
+                            <!-- Quests will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Recent Activity</h3>
+                        <div id="recent-activity" class="activity-list">
+                            <!-- Activity will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quests Page -->
+                <div id="quests-page" class="page">
+                    <h2>Available Quests</h2>
+                    <div id="quests-list" class="quests-grid">
+                        <!-- Quests will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Leaderboard Page -->
+                <div id="leaderboard-page" class="page">
+                    <h2>Leaderboard</h2>
+                    <div class="leaderboard-tabs">
+                        <button class="tab-btn active" data-tab="global">Global</button>
+                        <button class="tab-btn" data-tab="friends">Friends</button>
+                    </div>
+                    <div class="tab-content">
+                        <div id="global-leaderboard" class="tab-pane active">
+                            <table class="leaderboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Name</th>
+                                        <th>Points</th>
+                                        <th>Destinations</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="global-leaderboard-body">
+                                    <!-- Leaderboard data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="friends-leaderboard" class="tab-pane">
+                            <table class="leaderboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Name</th>
+                                        <th>Points</th>
+                                        <th>Destinations</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="friends-leaderboard-body">
+                                    <!-- Friends leaderboard data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Friends Page -->
+                <div id="friends-page" class="page">
+                    <h2>Friends</h2>
+                    <div class="friends-section">
+                        <div class="search-box">
+                            <input type="text" id="friend-search" placeholder="Search for friends...">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                        <div class="friends-list">
+                            <h3>Your Friends</h3>
+                            <div id="friends-container">
+                                <!-- Friends will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="friend-requests">
+                            <h3>Friend Requests</h3>
+                            <div id="friend-requests-container">
+                                <!-- Friend requests will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Page -->
+                <div id="profile-page" class="page">
+                    <h2>Your Profile</h2>
+                    <div class="profile-container">
+                        <div class="profile-info">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="profile-details">
+                                <h3 id="profile-name">User Name</h3>
+                                <p id="profile-email">user@example.com</p>
+                                <p>Member since: <span id="join-date">Jan 2023</span></p>
+                            </div>
+                        </div>
+                        <div class="profile-stats">
+                            <h3>Your Statistics</h3>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-coins"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="profile-points">0</h3>
+                                        <p>Total Points</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-map-marked-alt"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="profile-destinations">0</h3>
+                                        <p>Destinations Visited</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="profile-quests">0</h3>
+                                        <p>Quests Completed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="visited-destinations">
+                            <h3>Your Visited Destinations</h3>
+                            <div id="visited-destinations" class="destinations-grid">
+                                <!-- Visited destinations will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2023 Kilometers and Kilometers. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="scripts/data.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/quest.js"></script>
+    <script src="scripts/leaderboard.js"></script>
+    <script src="scripts/friends.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>
