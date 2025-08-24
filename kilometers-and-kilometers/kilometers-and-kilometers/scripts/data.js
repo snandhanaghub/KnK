@@ -57,53 +57,53 @@ const sampleData = {
     quests: [
         {
             id: 1,
-            name: "Kerala Exploration",
-            description: "Discover the beautiful destinations of Kerala, God's Own Country",
+            name: "Kerala Cultural Trail",
+            description: "Experience the soul of Kerala through culture, art, and food",
             reward: 500,
             destinations: [1, 2, 3, 4, 5],
-            image: "https://i.pinimg.com/1200x/25/5b/db/255bdb84cc4f6222c83d8d381c8a8b0f.jpg"
+            image: "images/quest.jpg"   // 👈 cultural quest cover
         }
     ],
     destinations: [
         {
             id: 1,
-            name: "Munnar Tea Gardens",
-            description: "Explore the beautiful tea plantations of Munnar",
+            name: "Jew Street Walk, Kochi",
+            description: "Stroll through Mattancherry’s historic Jew Street filled with spices, antiques, and stories.",
             reward: 100,
-            image: "https://i.pinimg.com/736x/09/60/26/096026c4fec3d0e30b39fb3d565e8206.jpg",
-            coordinates: { lat: 10.0889, lng: 77.0595 }
+            image: "images/jewstreet.jpg",
+            coordinates: { lat: 9.9636, lng: 76.2424 }
         },
         {
             id: 2,
-            name: "Backwaters of Alleppey",
-            description: "Experience the serene backwaters on a houseboat",
+            name: "Kaithari Experience, Chendamangalam",
+            description: "Watch traditional handloom weaving in action and try it yourself.",
             reward: 100,
-            image: "https://i.pinimg.com/736x/42/92/3d/42923d698e566f580b626b4a90a15df6.jpg",
-            coordinates: { lat: 9.4981, lng: 76.3388 }
+            image: "images/kaithari.jpg",
+            coordinates: { lat: 10.1552, lng: 76.2125 }
         },
         {
             id: 3,
-            name: "Fort Kochi",
-            description: "Discover the historic colonial architecture",
+            name: "Kathakali at Kalamandalam, Cheruthuruthy",
+            description: "Witness a mesmerizing Kathakali performance in Kerala’s cultural heartland.",
             reward: 100,
-            image: "https://i.pinimg.com/736x/de/79/8e/de798e1328415006dd462c7ccbe82d8a.jpg",
-            coordinates: { lat: 9.9312, lng: 76.2673 }
+            image: "images/kathakali.jpg",
+            coordinates: { lat: 10.7471, lng: 76.2725 }
         },
         {
             id: 4,
-            name: "Kovalam Beach",
-            description: "Relax on the beautiful beaches of Kovalam",
+            name: "Ambalappuzha Palpayasam",
+            description: "Taste the legendary sweet milk pudding offered at Ambalappuzha Sree Krishna Temple.",
             reward: 100,
-            image: "https://i.pinimg.com/736x/c8/f0/78/c8f078bdd21a641c6bb62193c5d98f7f.jpg",
-            coordinates: { lat: 8.3666, lng: 76.9969 }
+            image: "images/palpayasam.jpg",
+            coordinates: { lat: 9.3773, lng: 76.3354 }
         },
         {
             id: 5,
-            name: "Periyar Wildlife Sanctuary",
-            description: "Spot exotic wildlife in their natural habitat",
+            name: "Spice Raid in Mittayi Theruvu, Kozhikode",
+            description: "Explore Kozhikode’s Sweet Street, famous for halwas and spices.",
             reward: 100,
-            image: "https://i.pinimg.com/1200x/5d/d2/f1/5dd2f10ea0ba20008775aa89b0da1126.jpg",
-            coordinates: { lat: 9.4600, lng: 77.2100 }
+            image: "images/mittayi.jpg",
+            coordinates: { lat: 11.2588, lng: 75.7804 }
         }
     ],
     activities: [
@@ -111,7 +111,7 @@ const sampleData = {
             id: 1,
             userId: 1,
             type: "destination",
-            message: "Visited Munnar Tea Gardens",
+            message: "Explored Jew Street Walk, Kochi",
             time: "2 hours ago",
             points: 100
         },
@@ -127,7 +127,7 @@ const sampleData = {
             id: 3,
             userId: 1,
             type: "quest",
-            message: "Completed Kerala Exploration quest",
+            message: "Completed Kerala Cultural Trail",
             time: "3 days ago",
             points: 500
         },
@@ -165,19 +165,15 @@ function initializeData() {
 function getUsers() {
     return JSON.parse(localStorage.getItem('users') || '[]');
 }
-
 function getQuests() {
     return JSON.parse(localStorage.getItem('quests') || '[]');
 }
-
 function getDestinations() {
     return JSON.parse(localStorage.getItem('destinations') || '[]');
 }
-
 function getActivities() {
     return JSON.parse(localStorage.getItem('activities') || '[]');
 }
-
 function getCurrentUser() {
     return JSON.parse(localStorage.getItem('currentUser') || 'null');
 }
@@ -186,19 +182,15 @@ function getCurrentUser() {
 function saveUsers(users) {
     localStorage.setItem('users', JSON.stringify(users));
 }
-
 function saveQuests(quests) {
     localStorage.setItem('quests', JSON.stringify(quests));
 }
-
 function saveDestinations(destinations) {
     localStorage.setItem('destinations', JSON.stringify(destinations));
 }
-
 function saveActivities(activities) {
     localStorage.setItem('activities', JSON.stringify(activities));
 }
-
 function saveCurrentUser(user) {
     localStorage.setItem('currentUser', JSON.stringify(user));
 }
@@ -210,8 +202,6 @@ function updateUser(updatedUser) {
     if (index !== -1) {
         users[index] = updatedUser;
         saveUsers(users);
-        
-        // Update current user if it's the same user
         const currentUser = getCurrentUser();
         if (currentUser && currentUser.id === updatedUser.id) {
             saveCurrentUser(updatedUser);
