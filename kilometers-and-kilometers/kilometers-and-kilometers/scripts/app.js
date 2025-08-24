@@ -29,8 +29,10 @@ function loadAppData() {
     document.getElementById('profile-name').textContent = currentUser.name;
     document.getElementById('profile-email').textContent = currentUser.email;
     document.getElementById('join-date').textContent = currentUser.joined;
+    document.getElementById('profile-location').textContent = currentUser.location;
     document.getElementById('profile-points').textContent = currentUser.points;
     document.getElementById('profile-destinations').textContent = currentUser.visitedDestinations.length;
+    document.getElementById('profile-level').textContent = currentUser.level;
     
     // Load dashboard data
     loadDashboard();
@@ -60,6 +62,19 @@ function showPage(pageId) {
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => link.classList.remove('active'));
     document.querySelector(`.nav-link[data-page="${pageId}"]`).classList.add('active');
+    
+    // Reload page-specific data
+    if (pageId === 'dashboard') {
+        loadDashboard();
+    } else if (pageId === 'quests') {
+        loadQuests();
+    } else if (pageId === 'leaderboard') {
+        loadLeaderboard();
+    } else if (pageId === 'friends') {
+        loadFriends();
+    } else if (pageId === 'profile') {
+        loadProfile();
+    }
 }
 
 function loadDashboard() {
@@ -68,6 +83,7 @@ function loadDashboard() {
     
     // Update stats
     document.getElementById('visited-count').textContent = currentUser.visitedDestinations.length;
+    document.getElementById('total-points').textContent = currentUser.points;
     
     // Calculate completed quests
     const quests = getQuests();
@@ -112,7 +128,7 @@ function loadActiveQuests() {
         const questCard = document.createElement('div');
         questCard.className = 'quest-card';
         questCard.innerHTML = `
-            <div class="quest-image" style="background-image: url('${quest.image || 'images/placeholder-quest.jpg'}')"></div>
+            <div class="quest-image" style="background-image: url('${quest.image || 'https://images.unsplash.com/photo-1580739824572-f54c2763b2f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'}')"></div>
             <div class="quest-content">
                 <h3 class="quest-title">${quest.name}</h3>
                 <p class="quest-description">${quest.description}</p>
@@ -174,5 +190,40 @@ function loadRecentActivity() {
         `;
         
         container.appendChild(activityItem);
+    });
+}
+
+function loadProfile() {
+    const currentUser = getCurrentUser();
+    if (!currentUser) return;
+    
+    const destinations = getDestinations();
+    const container = document.getElementById('visited-destinations');
+    
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (currentUser.visitedDestinations.length === 0) {
+        container.innerHTML = '<p class="text-center">You haven\'t visited any destinations yet. Start exploring!</p>';
+        return;
+    }
+    
+    currentUser.visitedDestinations.forEach(destId => {
+        const destination = destinations.find(d => d.id === destId);
+        if (!destination) return;
+        
+        const destCard = document.createElement('div');
+        destCard.className = 'destination-card';
+        destCard.innerHTML = `
+            <div class="destination-image" style="background-image: url('${destination.image}')"></div>
+            <div class="destination-content">
+                <h4>${destination.name}</h4>
+                <p>${destination.description}</p>
+                <p class="destination-reward"><i class="fas fa-coins"></i> ${destination.reward} points earned</p>
+            </div>
+        `;
+        
+        container.appendChild(destCard);
     });
 }

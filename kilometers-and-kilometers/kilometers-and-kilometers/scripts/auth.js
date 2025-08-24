@@ -111,6 +111,7 @@ function registerUser(name, email, password) {
         points: 0,
         level: 1,
         joined: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+        location: "Kerala, India",
         visitedDestinations: [],
         friends: [],
         friendRequests: []

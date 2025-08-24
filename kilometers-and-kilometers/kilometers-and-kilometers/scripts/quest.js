@@ -11,7 +11,7 @@ function loadQuests() {
         const questCard = document.createElement('div');
         questCard.className = 'quest-card';
         questCard.innerHTML = `
-            <div class="quest-image" style="background-image: url('${quest.image || 'images/placeholder-quest.jpg'}')"></div>
+            <div class="quest-image" style="background-image: url('${quest.image || 'https://images.unsplash.com/photo-1580739824572-f54c2763b2f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'}')"></div>
             <div class="quest-content">
                 <h3 class="quest-title">${quest.name}</h3>
                 <p class="quest-description">${quest.description}</p>
@@ -49,7 +49,7 @@ function viewQuest(questId) {
                     const isVisited = currentUser.visitedDestinations.includes(destId);
                     return `
                         <div class="destination-item ${isVisited ? 'visited' : ''}">
-                            <div class="destination-image" style="background-image: url('${destination.image || 'images/placeholder-destination.jpg'}')"></div>
+                            <div class="destination-image-modal" style="background-image: url('${destination.image}')"></div>
                             <div class="destination-info">
                                 <h4>${destination.name}</h4>
                                 <p>${destination.description}</p>
@@ -90,28 +90,46 @@ function checkInToDestination() {
     // For the hackathon, we'll simulate checking in to a random destination
     const currentUser = getCurrentUser();
     const destinations = getDestinations();
-    const unvisitedDestinations = destinations.filter(d => !currentUser.visitedDestinations.includes(d.id));
+    const quests = getQuests();
+    const keralaQuest = quests.find(q => q.name === "Kerala Exploration");
+    
+    if (!keralaQuest) return;
+    
+    const unvisitedDestinations = keralaQuest.destinations.filter(dest => 
+        !currentUser.visitedDestinations.includes(dest)
+    );
     
     if (unvisitedDestinations.length === 0) {
-        alert('You have visited all destinations!');
+        alert('You have visited all destinations in the Kerala Exploration quest!');
         return;
     }
     
     // Select a random unvisited destination
-    const randomDestination = unvisitedDestinations[Math.floor(Math.random() * unvisitedDestinations.length)];
+    const randomDestinationId = unvisitedDestinations[Math.floor(Math.random() * unvisitedDestinations.length)];
+    const destination = destinations.find(d => d.id === randomDestinationId);
+    
+    if (!destination) return;
     
     // Update user data
-    currentUser.visitedDestinations.push(randomDestination.id);
-    currentUser.points += randomDestination.reward;
+    currentUser.visitedDestinations.push(randomDestinationId);
+    currentUser.points += destination.reward;
+    
+    // Level up logic (every 500 points)
+    const newLevel = Math.floor(currentUser.points / 500) + 1;
+    if (newLevel > currentUser.level) {
+        currentUser.level = newLevel;
+        alert(`Level up! You are now a Level ${newLevel} traveler!`);
+    }
+    
     updateUser(currentUser);
     
     // Add activity
     addActivity({
         userId: currentUser.id,
         type: 'destination',
-        message: `Visited ${randomDestination.name}`,
+        message: `Visited ${destination.name}`,
         time: 'Just now',
-        points: randomDestination.reward
+        points: destination.reward
     });
     
     // Check if any quests are completed
@@ -120,7 +138,11 @@ function checkInToDestination() {
     // Reload app data
     loadAppData();
     
-    alert(`Checked in to ${randomDestination.name}! You earned ${randomDestination.reward} points.`);
+    // Close any open modals
+    const modal = document.querySelector('.modal');
+    if (modal) document.body.removeChild(modal);
+    
+    alert(`Checked in to ${destination.name}! You earned ${destination.reward} points.`);
 }
 
 function checkQuestCompletion() {

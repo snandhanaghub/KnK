@@ -9,6 +9,10 @@ function loadFriends() {
     // Load friend requests
     loadFriendRequests();
     
+    // Update counts
+    document.getElementById('friends-count').textContent = `(${currentUser.friends.length})`;
+    document.getElementById('requests-count').textContent = `(${currentUser.friendRequests.length})`;
+    
     // Search functionality
     const searchBtn = document.querySelector('.friends-section .btn-primary');
     if (searchBtn) {
@@ -225,6 +229,10 @@ function acceptFriendRequest(friendId) {
     loadFriendsList();
     loadFriendRequests();
     
+    // Update counts
+    document.getElementById('friends-count').textContent = `(${currentUser.friends.length})`;
+    document.getElementById('requests-count').textContent = `(${currentUser.friendRequests.length})`;
+    
     alert(`You are now friends with ${friend.name}!`);
 }
 
@@ -237,6 +245,9 @@ function declineFriendRequest(friendId) {
     
     // Reload friend requests
     loadFriendRequests();
+    
+    // Update count
+    document.getElementById('requests-count').textContent = `(${currentUser.friendRequests.length})`;
 }
 
 function removeFriend(friendId) {
@@ -256,6 +267,9 @@ function removeFriend(friendId) {
     
     // Reload friends list
     loadFriendsList();
+    
+    // Update count
+    document.getElementById('friends-count').textContent = `(${currentUser.friends.length})`;
     
     alert(`Removed ${friend.name} from your friends.`);
 }

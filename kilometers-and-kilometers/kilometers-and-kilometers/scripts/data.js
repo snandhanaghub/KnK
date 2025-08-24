@@ -9,6 +9,7 @@ const sampleData = {
             points: 1250,
             level: 3,
             joined: "Jan 15, 2023",
+            location: "Kochi, Kerala",
             visitedDestinations: [1, 3],
             friends: [2, 3],
             friendRequests: [4]
@@ -21,6 +22,7 @@ const sampleData = {
             points: 980,
             level: 2,
             joined: "Feb 20, 2023",
+            location: "Thiruvananthapuram, Kerala",
             visitedDestinations: [1, 2, 4],
             friends: [1],
             friendRequests: []
@@ -33,6 +35,7 @@ const sampleData = {
             points: 750,
             level: 2,
             joined: "Mar 5, 2023",
+            location: "Kozhikode, Kerala",
             visitedDestinations: [2, 5],
             friends: [1],
             friendRequests: []
@@ -45,6 +48,7 @@ const sampleData = {
             points: 420,
             level: 1,
             joined: "Apr 12, 2023",
+            location: "Munnar, Kerala",
             visitedDestinations: [3],
             friends: [],
             friendRequests: []
@@ -54,10 +58,10 @@ const sampleData = {
         {
             id: 1,
             name: "Kerala Exploration",
-            description: "Discover the beautiful destinations of Kerala",
+            description: "Discover the beautiful destinations of Kerala, God's Own Country",
             reward: 500,
             destinations: [1, 2, 3, 4, 5],
-            image: "images/kerala-quest.jpg"
+            image: "https://i.pinimg.com/1200x/25/5b/db/255bdb84cc4f6222c83d8d381c8a8b0f.jpg"
         }
     ],
     destinations: [
@@ -66,7 +70,7 @@ const sampleData = {
             name: "Munnar Tea Gardens",
             description: "Explore the beautiful tea plantations of Munnar",
             reward: 100,
-            image: "images/destinations/munnar.jpg",
+            image: "https://i.pinimg.com/736x/09/60/26/096026c4fec3d0e30b39fb3d565e8206.jpg",
             coordinates: { lat: 10.0889, lng: 77.0595 }
         },
         {
@@ -74,7 +78,7 @@ const sampleData = {
             name: "Backwaters of Alleppey",
             description: "Experience the serene backwaters on a houseboat",
             reward: 100,
-            image: "images/destinations/alleppey.jpg",
+            image: "https://i.pinimg.com/736x/42/92/3d/42923d698e566f580b626b4a90a15df6.jpg",
             coordinates: { lat: 9.4981, lng: 76.3388 }
         },
         {
@@ -82,7 +86,7 @@ const sampleData = {
             name: "Fort Kochi",
             description: "Discover the historic colonial architecture",
             reward: 100,
-            image: "images/destinations/kochi.jpg",
+            image: "https://i.pinimg.com/736x/de/79/8e/de798e1328415006dd462c7ccbe82d8a.jpg",
             coordinates: { lat: 9.9312, lng: 76.2673 }
         },
         {
@@ -90,7 +94,7 @@ const sampleData = {
             name: "Kovalam Beach",
             description: "Relax on the beautiful beaches of Kovalam",
             reward: 100,
-            image: "images/destinations/kovalam.jpg",
+            image: "https://i.pinimg.com/736x/c8/f0/78/c8f078bdd21a641c6bb62193c5d98f7f.jpg",
             coordinates: { lat: 8.3666, lng: 76.9969 }
         },
         {
@@ -98,7 +102,7 @@ const sampleData = {
             name: "Periyar Wildlife Sanctuary",
             description: "Spot exotic wildlife in their natural habitat",
             reward: 100,
-            image: "images/destinations/periyar.jpg",
+            image: "https://i.pinimg.com/1200x/5d/d2/f1/5dd2f10ea0ba20008775aa89b0da1126.jpg",
             coordinates: { lat: 9.4600, lng: 77.2100 }
         }
     ],
@@ -126,6 +130,14 @@ const sampleData = {
             message: "Completed Kerala Exploration quest",
             time: "3 days ago",
             points: 500
+        },
+        {
+            id: 4,
+            userId: 1,
+            type: "system",
+            message: "Joined Kilometers and Kilometers",
+            time: "1 week ago",
+            points: 0
         }
     ]
 };
